@@ -48,7 +48,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             status, text = self.model.todos[row]
             self.model.todos[row] = (True,text)
             self.model.dataChanged.emit(index,index)
-            self.todoView.clearSelection()        
+            self.todoView.clearSelection()    
+                
     def add(self):
         """
         Add an item to our todo list, getting the text from the QLineEdit .todoEdit
