@@ -1,9 +1,11 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import Qt
+import json
 
 qt_creator_file = "mainwindow.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qt_creator_file)
+tick = QtGui.QColor('green')
 
 class TodoModel(QtCore.QAbstractListModel):
     def __init__(self,*args,todos = None, **kwargs):
@@ -13,9 +15,14 @@ class TodoModel(QtCore.QAbstractListModel):
     #data is the core of our model, it handles requests for data from the view and returns the appropiate result
     def data(self, index, role):
         if role == Qt.DisplayRole:
-            status, text = self.todos[index.row()]
+            _, text = self.todos[index.row()]
 
             return text
+
+        if role == Qt.DecorationRole:
+            status, _ = self.todos[index.row()]
+            if status:
+                return tick
 
     def rowCount(self,index):
         return len(self.todos)
@@ -25,7 +32,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
-        self.model = TodoModel(todos=[(False, 'my first todo')])
+        self.model = TodoModel()
+        self.load()
         self.todoView.setModel(self.model)  #todoView is the name of our list widget
         # connect the button
         self.addButton.pressed.connect(self.add)
@@ -38,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             index = indexes[0]
             del self.model.todos[index.row()]
             self.model.layoutChanged.emit()
-            self.todoview.clearSelection()
+            self.todoView.clearSelection()
 
     def complete(self):
         indexes = self.todoView.selectedIndexes()
@@ -49,7 +57,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.model.todos[row] = (True,text)
             self.model.dataChanged.emit(index,index)
             self.todoView.clearSelection()    
-                
+            self.save()
+
     def add(self):
         """
         Add an item to our todo list, getting the text from the QLineEdit .todoEdit
@@ -60,8 +69,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.model.todos.append((False,text))
             self.model.layoutChanged.emit() #triggering refresh
             self.todoEdit.setText("")
+            self.save()
 
+    def load(self):
+        try:
+            with open('data.json','r') as f:
+                self.model.todos = json.load(f)
+        
+        except Exception:
+            print('json file doesn\'t exist creating new one')
+
+    def save(self):
+        with open('data.json','w') as f:
+            data = json.dump(self.model.todos, f)
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()
+
+image = QtGui.QIcon('images/tick.jpg')
+window.setWindowIcon(image)
+window.setWindowTitle("To Do App")
+
 window.show()
 app.exec_()
