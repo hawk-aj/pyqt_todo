@@ -8,7 +8,7 @@
 ![screenshot](./images/Sample.png)
 </div>
 <br>
-<br>
+
 [Reference Link](https://www.pythonguis.com/tutorials/modelview-architecture/)
 <br>
 Add-ons to the reference
