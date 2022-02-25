@@ -22,7 +22,7 @@ class TodoModel(QtCore.QAbstractListModel):
         if role == Qt.DecorationRole:
             status, _ = self.todos[index.row()]
             if status:
-                return tick
+                return image
 
     def rowCount(self,index):
         return len(self.todos)
@@ -54,9 +54,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             index = indexes[0]
             row = index.row()
             status, text = self.model.todos[row]
-            self.model.todos[row] = (True,text)
-            self.model.dataChanged.emit(index,index)
-            self.todoView.clearSelection()    
+            if status == False:
+                self.model.todos[row] = (True,text)
+                self.model.dataChanged.emit(index,index)
+                self.todoView.clearSelection()    
+            else:
+                self.model.todos[row] = (False,text)
+                self.model.dataChanged.emit(index,index)
+                self.todoView.clearSelection()
             self.save()
 
     def add(self):
