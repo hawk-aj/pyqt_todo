@@ -3,11 +3,14 @@
 <br>
 <p>Simple To Do App using PyQt, Qt Designer with persistant storage.</p>
 
+![screenshot](./images/Sample.png)
+<br>
+<br>
 [Reference Link](https://www.pythonguis.com/tutorials/modelview-architecture/)
 <br>
-Additonal Features
+Add-ons to the reference
 <ol>
 <li>
-Something i have to think of
+Redisigned UI
 </li>
 </ol>
