@@ -8,7 +8,7 @@
 
 <div align = "center">
 
-![screenshot](./images/Sample.png | height=400)
+![screenshot](./images/Sample.png)
 </div>
 <br>
 
