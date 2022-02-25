@@ -8,11 +8,11 @@
 
 <div align = "center">
 
-![screenshot](./images/Sample.png)
+![screenshot](./images/Sample.png 400x200)
 </div>
 <br>
 
-[Reference Link](https://www.pythonguis.com/tutorials/modelview-architecture/ 400x200)
+[Reference Link](https://www.pythonguis.com/tutorials/modelview-architecture/)
 <br>
 Add-ons to the reference
 <ol>
