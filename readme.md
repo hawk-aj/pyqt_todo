@@ -12,7 +12,7 @@
 </div>
 <br>
 
-[Reference Link](https://www.pythonguis.com/tutorials/modelview-architecture/)
+[Reference Link](https://www.pythonguis.com/tutorials/modelview-architecture/ | height = 400)
 <br>
 Add-ons to the reference
 <ol>
